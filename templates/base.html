@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> {% block title %} {% endblock title %} </title>
+    <!-- Bootstrap CSS LOCAL -->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+
+
+
+</head>
+<body>
+<!-- NavBar Principal-->
+{% block navbar_main %}
+{% include 'partials/navbar_main.html' %}
+{% endblock navbar_main %}
+
+
+<!-- Contenido Principal -->
+<div class="main-content">
+    {% block content %}
+
+    {% endblock content %}
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content text-center">
+            <span class="text-muted ">© 2025 Seguros COsiente. Todos los derechos reservados.</span>
+        </div>
+    </footer>
+</div>
+
+<!-- Bootstrap JS Local -->
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+</html>
