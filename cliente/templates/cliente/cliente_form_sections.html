@@ -1,0 +1,186 @@
+<!-- Reutilizable desde Create y Update -->
+
+<!-- DATOS DEL CONTRATANTE -->
+<div class="card mb-4">
+    <div class="card-header bg-success text-white">
+        <strong>Datos del contratante</strong>
+    </div>
+    <div class="card-body row g-3">
+
+        <div class="col-md-6">
+            <label class="form-label">Nombre del contratante</label>
+            {{ form.nombre_contratante }}
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Sobrenombre</label>
+            {{ form.sobrenombre }}
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">RFC</label>
+            {{ form.rfc }}
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">Correo</label>
+            {{ form.correo }}
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">Fecha de nacimiento</label>
+            {{ form.fecha_nacimiento }}
+        </div>
+
+    </div>
+</div>
+
+<!-- (… y aquí pegas las demás secciones que ya te preparé:
+     asegurado, póliza, pagos, cobranza, fechas importantes)
+-->
+
+   <! -- ===========================
+             DATOS DEL ASEGURADO
+        ============================ -->
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <strong>Datos del asegurado</strong>
+            </div>
+
+            <div class="card-body row g-3">
+
+                <div class="col-md-6">
+                    <label class="form-label">Asegurado principal</label>
+                    {{ form.asegurado_principal }}
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">F. Nacimiento asegurado</label>
+                    {{ form.fecha_nacimiento_asegurado }}
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===========================
+             INFORMACIÓN DEL PRODUCTO / POLIZA
+        ============================ -->
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <strong>Información del Producto / Póliza</strong>
+            </div>
+
+            <div class="card-body row g-3">
+
+                <div class="col-md-4">
+                    <label class="form-label">No. Póliza</label>
+                    {{ form.poliza }}
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Producto</label>
+                    {{ form.producto }}
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Estatus del cliente</label>
+                    {{ form.estatus_cliente }}
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">¿Deducible?</label>
+                    {{ form.deduce }}
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Moneda</label>
+                    {{ form.moneda }}
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===========================
+             MÉTODO DE PAGO
+        ============================ -->
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <strong>Método de Pago</strong>
+            </div>
+
+            <div class="card-body row g-3">
+
+                <div class="col-md-4">
+                    <label class="form-label">Modo de Pago</label>
+                    {{ form.modo_pago }}
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Banco</label>
+                    {{ form.banco }}
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Periodo de Pago</label>
+                    {{ form.periodo_pago }}
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Día de Cobro</label>
+                    {{ form.dia_cobro }}
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===========================
+             COBRANZA
+        ============================ -->
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <strong>Cobranza</strong>
+            </div>
+
+            <div class="card-body row g-3">
+
+                <div class="col-md-4">
+                    <label class="form-label">Rechazo</label>
+                    {{ form.rechazo }}
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Intentos</label>
+                    {{ form.intentos }}
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Amparado</label>
+                    {{ form.amparado }}
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===========================
+             FECHAS IMPORTANTES
+        ============================ -->
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <strong>Fechas </strong>
+            </div>
+
+            <div class="card-body row g-3">
+
+                <div class="col-md-4">
+                    <label class="form-label">Fecha Emisión</label>
+                    {{ form.fecha_emision }}
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Fecha Vencimiento</label>
+                    {{ form.fecha_vencimiento }}
+                </div>
+
+            </div>
+        </div>
+

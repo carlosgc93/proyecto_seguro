@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <!-- =========================
+         CARD DATOS DEL CLIENTE
+    ========================== -->
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Detalle del Cliente</h5>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                <div class="col-md-4">
+                    <strong>Póliza:</strong>
+                    <div class="text-muted">{{ cliente.poliza }}</div>
+                </div>
+
+                <div class="col-md-4">
+                    <strong>Nombre del contratante:</strong>
+                    <div class="text-muted">
+                        {{ cliente.nombre_contratante|default:"No hay datos" }}
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <strong>Sobrenombre:</strong>
+                    <div class="text-muted">
+                        {{ cliente.sobrenombre|default:"No hay datos" }}
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <strong>Fecha de nacimiento:</strong>
+                    <div class="text-muted">
+                        {{ cliente.fecha_nacimiento|default:"No hay datos" }}
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <strong>Producto:</strong>
+                    <div class="text-muted">
+                        {{ cliente.get_producto_display|default:"No hay datos" }}
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <strong>Estatus:</strong>
+                    <div class="text-muted">
+                        {{ cliente.get_estatus_cliente_display|default:"No hay datos" }}
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <strong>Correo:</strong>
+                    <div class="text-muted">
+                        {{ cliente.correo|default_if_none:"No hay datos" }}
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <strong>RFC:</strong>
+                    <div class="text-muted">
+                        {{ cliente.rfc|default_if_none:"No hay datos" }}
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <strong>Moneda:</strong>
+                    <div class="text-muted">
+                        {{ cliente.get_moneda_display|default:"No hay datos" }}
+                    </div>
+                </div>
+
+                 <div class="col-md-4">
+                    <strong>Asegurado Principal:</strong>
+                    <div class="text-muted">
+                        {{ cliente.asegurado_principal |default_if_none:"No hay datos" }}
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- =========================
+         SECCIÓN BENEFICIARIOS
+    ========================== -->
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Beneficiarios</h5>
+
+            <!-- BOTÓN AGREGAR BENEFICIARIO -->
+            <button type="button"
+                    class="btn btn-light btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalBeneficiario">
+                Agregar Beneficiario
+            </button>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+
+                {% for b in cliente.beneficiarios.all %}
+                <div class="col-md-4">
+                    <div class="card mb-3 border-success shadow-sm">
+                        <div class="card-body">
+
+                            <h6 class="card-title text-success">
+                                {{ b.nombre_beneficiario }}
+                            </h6>
+
+                            <p class="mb-1">
+                                <strong>Estatus:</strong>
+                                {{ b.get_estatus_beneficiario_display }}
+                            </p>
+
+                            <p class="mb-1">
+                                <strong>Fecha de nacimiento:</strong>
+                                {{ b.fecha_nacimiento_beneficiario }}
+                            </p>
+
+                            <p class="mb-1">
+                                <strong>Parentesco:</strong>
+                                {{ b.get_parentesco_display }}
+                            </p>
+                            <div class="d-flex justify-content-end">
+                                <form method="POST"
+                                  action="{% url 'cliente:beneficiario-eliminar' b.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit"
+                                            class="btn btn-sm btn-outline-danger">
+                                        Eliminar
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% empty %}
+                <div class="col-12 text-center text-muted">
+                    No hay beneficiarios registrados.
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- AQUÍ ABAJO VA TU MODAL -->
+{% include "cliente/partials/modal_beneficiario.html" %}
+
+{% endblock %}

@@ -1,0 +1,70 @@
+<div class="modal fade" id="modalBeneficiario" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- HEADER -->
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">Agregar Beneficiario's</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- BODY -->
+            <div class="modal-body">
+                <form method="POST" action="{% url 'cliente:beneficiario-crear' cliente.id %}"
+                id="formBeneficiario">
+                {% csrf_token %}
+
+<div class="row g-3">
+
+    <!-- NOMBRE -->
+    <div class="col-md-6">
+        <label class="form-label">Nombre del beneficiario</label>
+        {{ beneficiario_form.nombre_beneficiario }}
+        {{ beneficiario_form.nombre_beneficiario.errors }}
+    </div>
+
+    <!-- FECHA NACIMIENTO -->
+    <div class="col-md-6">
+        <label class="form-label">Fecha de nacimiento</label>
+        {{ beneficiario_form.fecha_nacimiento_beneficiario }}
+        {{ beneficiario_form.fecha_nacimiento_beneficiario.errors }}
+    </div>
+
+    <!-- ESTATUS -->
+    <div class="col-md-6">
+        <label class="form-label">Estatus</label>
+        {{ beneficiario_form.estatus_beneficiario }}
+        {{ beneficiario_form.estatus_beneficiario.errors }}
+    </div>
+
+    <!-- PARENTESCO -->
+    <div class="col-md-6">
+        <label class="form-label">Parentesco</label>
+        {{ beneficiario_form.parentesco }}
+        {{ beneficiario_form.parentesco.errors }}
+    </div>
+
+</div>
+
+                    <!-- FOOTER -->
+                    <div class="modal-footer mt-4">
+                        <button type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+
+                        <button type="submit"
+                                class="btn btn-success"
+                                id="btnAgregarBeneficiario"
+                                >
+                            Agregar
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

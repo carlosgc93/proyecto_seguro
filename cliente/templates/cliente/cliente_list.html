@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<div class="row mb-1">
+    <div class="col-md-12 text-center">
+        <h4>Conteo: {{ page_obj.paginator.count }} Cliente{{ page_obj.paginator.count|pluralize }}
+        </h4>
+    </div>
+</div>
+<div class="container-fluid">
+    <!-- NAVBAR SECUNDARIA -->
+<nav class="navbar navbar-expand-lg bg-success-subtle rounded mb-3">
+    <div class="container-fluid justify-content-center">
+
+        <div class="d-flex gap-3">
+
+            <!-- Botón Nuevo Cliente -->
+            <a href="{% url 'cliente:cliente-nuevo' %}" class="btn btn-success">
+                <i class="fa-solid fa-user-plus"></i> Nuevo Cliente
+            </a>
+
+            <!-- FORMULARIO ÚNICO PARA TODOS LOS FILTROS -->
+            <form class="d-flex gap-2" method="get" action="">
+
+                <!-- Buscador -->
+                <input class="form-control" type="search" placeholder="Buscar cliente"
+                       name="q" value="{{ request.GET.q }}">
+
+                <!-- Filtro Mes de Nacimiento -->
+                    <select name="mes_nac" class="form-select">
+                        <option value="">Mes Nac.</option>
+                        <option value="1"  {% if request.GET.mes_nac == '1' %}selected{% endif %}> Enero </option>
+                        <option value="2"  {% if request.GET.mes_nac == '2' %}selected{% endif %}>Febrero</option>
+                        <option value="3"  {% if request.GET.mes_nac == '3' %}selected{% endif %}>Marzo</option>
+                        <option value="4"  {% if request.GET.mes_nac == '4' %}selected{% endif %}>Abril</option>
+                        <option value="5"  {% if request.GET.mes_nac == '5' %}selected{% endif %}>Mayo</option>
+                        <option value="6"  {% if request.GET.mes_nac == '6' %}selected{% endif %}>Junio</option>
+                        <option value="7"  {% if request.GET.mes_nac == '7' %}selected{% endif %}>Julio</option>
+                        <option value="8"  {% if request.GET.mes_nac == '8' %}selected{% endif %}>Agosto</option>
+                        <option value="9"  {% if request.GET.mes_nac == '9' %}selected{% endif %}>Septiembre</option>
+                        <option value="10" {% if request.GET.mes_nac == '10' %}selected{% endif %}>Octubre</option>
+                        <option value="11" {% if request.GET.mes_nac == '11' %}selected{% endif %}>Noviembre</option>
+                        <option value="12" {% if request.GET.mes_nac == '12' %}selected{% endif %}>Diciembre</option>
+                    </select>
+
+                <!-- Filtro Mes -->
+                <select name="mes" class="form-select">
+                    <option value="">Mes Emisión</option>
+                    <option value="1"  {% if request.GET.mes == '1' %}selected{% endif %}>Enero</option>
+                    <option value="2"  {% if request.GET.mes == '2' %}selected{% endif %}>Febrero</option>
+                    <option value="3"  {% if request.GET.mes == '3' %}selected{% endif %}>Marzo</option>
+                    <option value="4"  {% if request.GET.mes == '4' %}selected{% endif %}>Abril</option>
+                    <option value="5"  {% if request.GET.mes == '5' %}selected{% endif %}>Mayo</option>
+                    <option value="6"  {% if request.GET.mes == '6' %}selected{% endif %}>Junio</option>
+                    <option value="7"  {% if request.GET.mes == '7' %}selected{% endif %}>Julio</option>
+                    <option value="8"  {% if request.GET.mes == '8' %}selected{% endif %}>Agosto</option>
+                    <option value="9"  {% if request.GET.mes == '9' %}selected{% endif %}>Septiembre</option>
+                    <option value="10" {% if request.GET.mes == '10' %}selected{% endif %}>Octubre</option>
+                    <option value="11" {% if request.GET.mes == '11' %}selected{% endif %}>Noviembre</option>
+                    <option value="12" {% if request.GET.mes == '12' %}selected{% endif %}>Diciembre</option>
+                </select>
+
+                <!-- Filtro Año -->
+                <select name="anio" class="form-select">
+                    <option value="">Año Emisión</option>
+                    {% for fecha in años_emision %}
+                    <option value="{{ fecha.year }}"
+                        {% if request.GET.anio == fecha.year|stringformat:"s" %}selected{% endif %}>
+                        {{ fecha.year }}
+                    </option>
+                    {% endfor %}
+                </select>
+
+                <!-- Filtro Producto -->
+                <select name="producto" class="form-select">
+                    <option value="">Producto</option>
+                    {% for key, val in productos_choices %}
+                        <option value="{{ key }}" {% if request.GET.producto == key %}selected{% endif %}>
+                            {{ val }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <!-- Botón Buscar -->
+                <button class="btn btn-outline-success" type="submit">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+
+                <!-- Botón Limpiar -->
+                <button class="btn btn-outline-danger" type="button"
+                        onclick="window.location.href='{% url 'cliente:cliente-list' %}'">
+                    <i class="fa-solid fa-broom"></i> Limpiar
+                </button>
+
+            </form>
+        </div>
+    </div>
+</nav>
+
+
+    <!-- Lista de clientes -->
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Poliza</th>
+            <th>Contratante</th>
+            <th>Fecha Nacimiento</th>
+            <th>Fecha de Emisión</th>
+            <th>Producto</th>
+            <th>Estatus</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for cliente in object_list %}
+        <tr>
+            <td>{{ cliente.id}}</td>
+            <td>{{ cliente.poliza }}</td>
+            <td>{{ cliente.nombre_contratante }}</td>
+            <td>{{ cliente.fecha_nacimiento |date:"d/m/Y"|default:"-" }}</td>
+            <td>{{ cliente.fecha_emision|date:"d/m/Y"|default:"-" }}</td>
+            <td><span class="badge bg-info">{{ cliente.get_producto_display }}</span></td>
+            <td>
+                {% if cliente.estatus_cliente == 'en_vigor' %}
+                <span class="badge bg-success">En Vigor</span>
+                {% else %}
+                <span class="badge bg-danger">Anulada</span>
+                {% endif %}
+            </td>
+
+            <td>
+                <!-- Botón Ver detalle -->
+                <a href="{% url 'cliente:cliente_detalle' cliente.pk %}" class="btn btn-secondary btn-sm">
+                    <i class="fa-solid fa-pen-to-square"></i> Ver Detalle
+                </a>
+                <!-- Botón editar -->
+                <a href="{% url 'cliente:cliente-editar' cliente.pk %}"
+                   class="btn btn-outline-secondary btn-sm">
+                    <i class="fa-solid fa-pen-to-square"></i> Editar
+                </a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No hay clientes registrados.</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Paginación -->
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; Primero</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        {% endif %}
+
+        <span class="current">
+            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Último &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+
+    {% endblock %}
+
+</div>
