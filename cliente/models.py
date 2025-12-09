@@ -179,6 +179,3 @@ class Beneficiario(models.Model):
         parentesco = self.parentesco if self.parentesco else "Sin parentesco"
         return f"{self.nombre_beneficiario} ({parentesco})"
 
-
-
-
