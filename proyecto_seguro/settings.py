@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     #Apps del proyecto
     'cliente.apps.ClienteConfig',
     'usuarios.apps.UsuariosConfig',
+    'importaciones.apps.ImportacionesConfig',
 ]
 
 MIDDLEWARE = [

@@ -37,10 +37,16 @@
                 </div>
 
                 <div class="col-md-4">
-                    <strong>Fecha de nacimiento:</strong>
-                    <div class="text-muted">
-                        {{ cliente.fecha_nacimiento|default:"No hay datos" }}
-                    </div>
+                <strong>Fecha de nacimiento:</strong>
+                        <div class="text-muted">
+                            {{ cliente.fecha_nacimiento|date:"d/m/Y"|default:"No hay datos" }}
+                        </div>
+                </div>
+                <div class="col-md-4">
+                <strong>Fecha de emisión:</strong>
+                        <div class="text-muted">
+                            {{ cliente.fecha_emision|date:"d/m/Y"|default:"No hay datos" }}
+                        </div>
                 </div>
 
                 <div class="col-md-4">
@@ -82,6 +88,13 @@
                     <strong>Asegurado Principal:</strong>
                     <div class="text-muted">
                         {{ cliente.asegurado_principal |default_if_none:"No hay datos" }}
+                    </div>
+                </div>
+
+                 <div class="col-md-4">
+                    <strong>Fecha Nac Asegurado:</strong>
+                    <div class="text-muted">
+                        {{ cliente.fecha_nacimiento_asegurado|default_if_none:"No hay datos" }}
                     </div>
                 </div>
 

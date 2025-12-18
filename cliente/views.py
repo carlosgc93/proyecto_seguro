@@ -19,7 +19,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class ClienteListView(LoginRequiredMixin, ListView):
     model = Cliente
     template_name = "cliente/cliente_list.html"
-    paginate_by = 5
+    paginate_by = 15
     ordering = ['-id']
     login_url = 'usuarios:login'
 
