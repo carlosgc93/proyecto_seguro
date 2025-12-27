@@ -17,7 +17,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 env = environ.Env()
 # Take environment variables from .env file
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
@@ -31,8 +30,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -43,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #Apps del proyecto
+    # Apps del proyecto
     'cliente.apps.ClienteConfig',
     'usuarios.apps.UsuariosConfig',
     'importaciones.apps.ImportacionesConfig',
@@ -51,6 +49,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -77,9 +76,7 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = 'proyecto_seguro.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
@@ -90,7 +87,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -110,7 +106,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
@@ -119,7 +114,6 @@ USE_I18N = True  # Activa traducción de textos
 USE_L10N = True  # Activa formato local de datos
 USE_TZ = True  # Activa zonas horarias
 TIME_ZONE = 'America/Mexico_City'  # Tu zona horaria
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
@@ -135,7 +129,7 @@ STATICFILES_DIRS = [
 # Para producción (cuando ejecutes collectstatic)
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-#URLS PARA EL LOGEO
+# URLS PARA EL LOGEO
 LOGIN_URL = 'usuarios:login'
 LOGIN_REDIRECT_URL = 'cliente:cliente-list'
 LOGOUT_REDIRECT_URL = 'usuarios:login'
