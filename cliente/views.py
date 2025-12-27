@@ -11,6 +11,7 @@ from django.db.models import Q
 from django.urls import reverse_lazy
 from .forms import ClienteForm, BeneficiarioForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 
 # =====================================================
@@ -108,7 +109,7 @@ class BeneficiarioListView(LoginRequiredMixin, ListView):
     ordering = ['-id']
     login_url = 'usuarios:login'
 
-
+@login_required(login_url='usuarios:login')
 def crear_beneficiario(request, cliente_id):
     cliente = get_object_or_404(Cliente, id=cliente_id)
 
@@ -122,6 +123,7 @@ def crear_beneficiario(request, cliente_id):
 
     return redirect("cliente:cliente_detalle", pk=cliente.id)
 
+@login_required(login_url='usuarios:login')
 def eliminar_beneficiario(request, beneficiario_id):
     beneficiario = get_object_or_404(Beneficiario, id=beneficiario_id)
     cliente_id = beneficiario.nombre_contratante.id
